@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jas.mapper.AreaMapper">
+
+    <select id="queryArea" resultType="com.jas.domain.Area">
+      SELECT  * 
+      FROM t_area
+      ORDER BY priority
+      DESC 
+    </select>
+
+    <select id="queryAreaById" resultType="com.jas.domain.Area">
+      SELECT  * 
+      FROM t_area
+      WHERE area_id = #{areaId}
+    </select>
+
+    <insert id="insertArea" useGeneratedKeys="true" keyProperty="areaId"
+            keyColumn="area_id" parameterType="com.jas.domain.Area">
+      INSERT INTO  
+      t_area (area_name, priority, create_time, last_edit_time)
+      VALUES (#{areaName},#{priority},#{createTime},#{lastEditTime})
+    </insert>
+    
+    <update id="updateArea" parameterType="com.jas.domain.Area">
+        UPDATE t_area 
+        <set>
+            <if test="areaName != null">area_name = #{areaName}</if>
+            <if test="priority != null">, priority = #{priority}</if>
+            <if test="lastEditTime != null">, last_edit_time = #{lastEditTime}</if>
+        </set>
+        WHERE area_id = #{areaId} 
+    </update>
+    
+    <delete id="deleteAreaById">
+        DELETE FROM 
+        t_area
+        WHERE area_id = #{areaId}
+    </delete>
+    
+</mapper>

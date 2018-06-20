@@ -13,5 +13,7 @@ Spring Boot 异常与错误处理的（404、500...） demo。Spring Boot可以�
 
 这个 demo 对异常与错误进行了整合，当出现异常与 404 错误时，用浏览器访问会跳转到 templates/error/404.html 页面，其他客户端访问时会返回内置与自定义的 JSON 数据。
 
-postman 测试：
+浏览器测试：<br>
+<img src="https://s1.ax1x.com/2018/06/20/Cz7IeJ.png" alt="" width="450" height="166">
+postman 测试：<br>
 <img src="https://s1.ax1x.com/2018/06/20/Cz7tit.png" alt="" width="450" height="166">

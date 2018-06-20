@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>模板错误自带的错误信息</h2>
+    <h3>status：[[${status}]]</h3>
+    <h3>timestamp：<span th:text="${#dates.format(timestamp, 'yyyy-MM-dd HH:mm:ss')}"></span></h3>
+    <h3>error：[[${error}]]</h3>
+    <h3>exception：[[${exception}]]</h3>
+    <h3>message：[[${message}]]</h3>
+    <h3>errors：[[${errors}]]</h3>
+    <h2>定制的错误信息</h2>
+    <h3>test：[[${test}]]</h3>
+</body>
+</html>                                            

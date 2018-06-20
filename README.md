@@ -7,7 +7,7 @@
 
 ## springboot-error
 
-Spring Boot 异常与错误处理的（404、500...） demo。Spring Boot可以根据 HTTP 的请求头（<code>accept</code>）信息，判断客户端想要什么类型的返回数据（HTML OR JSON）。
+Spring Boot 异常与错误处理的（404、500...） demo。Spring Boot可以根据 HTTP 的请求头（<code>accept</code>）信息，判断客户端想要什么类型的返回数据（HTML OR JSON），可以在 <code>BasicErrorController</code> 类中查看。
 
 在有模板引擎的情况下，Spring Boot 底层会扫描 templates/error/×××.html 页面，根据 HTTP 的响应码找到对应的错误提示页面，在该页面下也可以通过表达式获取一些错误提示信息。如果没有配置模板引擎，则扫描 static/error/×××.html 页面。
 

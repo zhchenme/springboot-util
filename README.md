@@ -9,6 +9,17 @@
 
 Spring Boot 异常与错误处理的（404、500...） demo。Spring Boot可以根据 HTTP 的请求头（<code>accept</code>）信息，判断客户端想要什么类型的返回数据（HTML OR JSON），可以在 <code>BasicErrorController</code> 类中查看。
 
-在有模板引擎的情况下，Spring Boot 底层会扫描 templates/error/×××.html 页面，根据 HTTP 的响应码找到对应的错误提示页面，在该页面下也可以通过表达式获取一些错误提示信息。如果没有配置模板引擎，则扫描 static/error/×××.html 页面。
+在有模板引擎的情况下，Spring Boot 底层会扫描 <code>templates/error/×××.html</code> 页面，根据 HTTP 的响应码找到对应的错误提示页面，在该页面下也可以通过表达式获取一些错误提示信息。如果没有配置模板引擎，则扫描 <code>static/error/×××.html</code> 页面。
 
-这个 demo 对异常与错误进行了整合，当出现异常与 404 错误时，用浏览器访问会跳转到 templates/error/404.html 页面，其他客户端访问时会返回内置与自定义的 JSON 数据。
+这个 demo 对异常与错误进行了整合，当出现异常与 404 错误时，用浏览器访问会跳转到 <code>templates/error/404.html</code> 页面，其他客户端访问时会返回内置与自定义的 JSON 数据。
+
+## springboot-jsp
+
+Spring Boot 整合 JSP 开发的 demo，基于 Spring Boot2.0 以上版本，使用本地 tomcat 容器。需要注意的是，本地 tomcat 容器版本必须支持 Spring Boot 的版本，否则启动 tomcat 时会报错。 
+
+demo 基于 Spring Boot2.03、Tomcat-8.5.31
+
+
+## springboot-mybatis
+
+整合了基于注解与配置文件两种方式的 demo，使用阿里开源的数据源 <code>druid</code>，并配置了监控中心。

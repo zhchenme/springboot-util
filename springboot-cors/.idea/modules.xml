@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/jsonp-client/jsonp-client.iml" filepath="$PROJECT_DIR$/jsonp-client/jsonp-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jsonp-server/jsonp-server.iml" filepath="$PROJECT_DIR$/jsonp-server/jsonp-server.iml" />
+    </modules>
+  </component>
+</project>

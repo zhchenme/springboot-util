@@ -23,3 +23,7 @@ demo 基于 Spring Boot2.03、Tomcat-8.5.31
 ## springboot-mybatis
 
 整合了基于注解与配置文件两种方式的 demo，使用阿里开源的数据源 <code>druid</code>，并配置了监控中心。
+
+## springboot-cors
+
+Spring Boot 在服务端解决 AJAX 跨域问题的 demo。

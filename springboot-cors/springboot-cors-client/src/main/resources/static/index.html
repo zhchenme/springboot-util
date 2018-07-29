@@ -5,16 +5,27 @@
     <title>Title</title>
 </head>
 <body>
+<a href="#" onclick="getServerResponse0()">使用 GET 形式，请求端口为8081的服务</a><br>
 <a href="#" onclick="getServerResponse1()">使用 POST 形式，请求端口为8081的服务</a><br>
 <a href="#" onclick="getServerResponse2()">携带 Cookie 请求端口为8081的服务</a><br>
 <a href="#" onclick="getServerResponse3()">携带自定义请求头请求端口为8081的服务</a><br>
 </body>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
+    function getServerResponse0() {
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:8081/gettest",
+            success: function(result) {
+                console.log(result)
+            }
+        });
+    }
+    
     function getServerResponse1() {
         $.ajax({
             type: 'POST',
-            url: "http://localhost:8081/servertest",
+            url: "http://localhost:8081/posttest",
             success: function(result) {
                 console.log(result)
             }

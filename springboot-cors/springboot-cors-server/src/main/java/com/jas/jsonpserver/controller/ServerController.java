@@ -12,12 +12,21 @@ import org.springframework.web.bind.annotation.*;
 public class ServerController {
 
     /**
+     * 测试 GET 形式的请求
+     * 
+     * @return
+     */
+    @GetMapping("/gettest")
+    public String getTest() {
+        return "Hello Jas";
+    }
+    /**
      * 测试 POST 形式的请求
      * 
      * @return
      */
-    @PostMapping("/servertest")
-    public String test() {
+    @PostMapping("/posttest")
+    public String postTest() {
         return "Hello Jas";
     }
 

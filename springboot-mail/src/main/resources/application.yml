@@ -1,0 +1,6 @@
+spring:
+  mail:
+    password: gdcuwwsxujyrbbch
+    username: coderjas@foxmail.com
+    host: smtp.qq.com
+    properties.mail.smtp.ssl.enable: true

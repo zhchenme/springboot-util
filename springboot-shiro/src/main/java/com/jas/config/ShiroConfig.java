@@ -44,14 +44,14 @@ public class ShiroConfig {
     /**
      * shiro 拦截器拦截到所有请求后，调用此方法
      *
-     * @param maneger
+     * @param manager
      * @return
      */
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager maneger) {
+    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean factory = new ShiroFilterFactoryBean();
 
-        factory.setSecurityManager(maneger);
+        factory.setSecurityManager(manager);
 
         LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
 
@@ -63,17 +63,14 @@ public class ShiroConfig {
         // 设置过滤链
         Map<String, String> filterChainMap = new LinkedHashMap<>();
         
-        // 所有请求都走authc认证拦截器
-        filterChainMap.put("/yecaishui/admin/login", "anon");
-
-        //官网接口过滤
-        filterChainMap.put("/yecaishui/gw/**", "anon");
-        filterChainMap.put("/yecaishui/**", "authc");
+        filterChainMap.put("/shiro/user/login", "anon");
+        filterChainMap.put("/shiro/*", "authc");
         
         factory.setFilterChainDefinitionMap(filterChainMap);
-        // 没有认证用户,shiro会跳转到登录页面,前后端分离项目后端不控制跳转,跳转到未授权界面,返回json
-        factory.setLoginUrl("/yecaishui/unAuthc");
-        factory.setUnauthorizedUrl("/yecaishui/unPerms");
+        
+        // 没有认证用户,shiro 会跳转到登录页面,前后端分离项目后端不控制跳转,跳转到未授权界面,返回 json
+        factory.setLoginUrl("/user/unAuthc");
+        factory.setUnauthorizedUrl("/user/unPerms");
         
         return factory;
     }
@@ -97,7 +94,7 @@ public class ShiroConfig {
     }
 
     /**
-     * Session Manager 使用的是shiro-redis开源插件
+     * Session Manager 使用的是 shiro-redis 开源插件
      */
     @Bean
     public DefaultWebSessionManager sessionManager() {
@@ -152,7 +149,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 自定义数据源
+     * 自定义 Realm
      * 
      * @param credentialsMatcher
      * @return

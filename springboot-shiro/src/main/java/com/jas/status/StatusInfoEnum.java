@@ -6,8 +6,19 @@ package com.jas.status;
  * @create 2018-08-21 17:58
  */
 public enum StatusInfoEnum {
-    REQUEST_SUCCESS("200", "OK");
-
+    REQUEST_SUCCESS("200", "OK"),
+    /**
+     * 用户名 或密码错误
+     */
+    REQUEST_USERNAMEORPASSWORD_EXCEPTION("410", "用户名或密码错误"),
+    /**
+     * 未登录
+     */
+    REQUEST_UNAUTHC_EXCEPTION("411", "未登录"),
+    /**
+     * 未授权
+     */
+    REQUEST_UNPERMS_EXCEPTION("412", "未授权");
     /**
      * 状态码
      */

@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  *
  * @author zchen
- * @since 2018-08-26
+ * @since 2018-08-27
  */
 public interface AuthDao extends BaseMapper<Auth> {
 

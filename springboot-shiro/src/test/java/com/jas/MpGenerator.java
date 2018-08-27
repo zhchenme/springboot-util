@@ -61,8 +61,8 @@ public class MpGenerator {
         strategy.setTablePrefix(new String[]{TABLE_PREFIX});
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
-//        strategy.setInclude(new String[]{"t_user", "t_roles", "t_permissions"});
-        strategy.setInclude(null);
+        strategy.setInclude(new String[]{"t_auth"});
+//        strategy.setInclude(null);
         // strategy.setExclude(new String[]{"test"});
         mpg.setStrategy(strategy);
 

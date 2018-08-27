@@ -5,6 +5,8 @@ import com.jas.entity.User;
 import com.jas.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -23,10 +25,14 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
     
+    private Logger logger = LoggerFactory.getLogger(UserServiceTest.class);
+    
     @Test
     public void getUser() {
         List<User> userList = userService.selectList(new EntityWrapper<>());
 
+        logger.info("获取用户信息");
+        
         for (int i = 0; i < userList.size(); i++) {
             User user =  userList.get(i);
 

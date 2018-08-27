@@ -15,7 +15,6 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import java.security.Permissions;
 import java.util.List;
 
 /**
@@ -44,12 +43,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String userName = token.getUsername();
 
-        // 判断用户是否存在
         if (StringUtils.isEmpty(userName)) {
             return null;
         }
 
-        // 获取用户名
+        // 获取用户信息
         List<User> userList = userService.selectList(new EntityWrapper<User>().eq("user_name", userName));
 
         if (null == userList || userList.isEmpty()) {
@@ -57,18 +55,23 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
 
         User user = userList.get(0);
-
+        UserVo userVo = new UserVo();
+        
+        userVo.setId(user.getId());
+        userVo.setUserName(user.getUserName());
+        userVo.setPassword(user.getPassword());
+        
         // 注入凭证校验,userName 作为盐
-        ByteSource salt = ByteSource.Util.bytes(user.getUserName());
+        ByteSource salt = ByteSource.Util.bytes(userVo.getUserName());
 
         // 注入凭证匹配器.进行 md5 校验
-        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user, user.getPassword(), salt, getName());
+        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(userVo, user.getPassword(), salt, getName());
 
         return authcInfo;
     }
 
     /**
-     * 授权
+     * 设置角色与授权
      *
      * @param principals
      * @return
@@ -90,12 +93,13 @@ public class MyShiroRealm extends AuthorizingRealm {
 
         // 构造权限后返回
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-
+        
         // 构造权限
         for (Auth auth : authList) {
             info.addStringPermission(auth.getAuthName());
         }
 
+        
         return info;
     }
 

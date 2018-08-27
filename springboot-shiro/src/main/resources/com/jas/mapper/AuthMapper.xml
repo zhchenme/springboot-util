@@ -12,14 +12,14 @@
     <sql id="Base_Column_List">
         id, auth_name
     </sql>
-    
+
     <select id="getUserAuthListById" resultType="com.jas.entity.Auth">
         SELECT
             *
         FROM
-            t_auth
+            t_auth AS a
         WHERE
-            id = (
+            a.id = (
                 SELECT
                     auth_id
                 FROM
@@ -35,5 +35,4 @@
                     )
             )
     </select>
-    
 </mapper>

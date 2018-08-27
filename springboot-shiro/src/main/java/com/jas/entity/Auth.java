@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author zchen
- * @since 2018-08-26
+ * @since 2018-08-27
  */
 @TableName("t_auth")
 public class Auth extends Model<Auth> {

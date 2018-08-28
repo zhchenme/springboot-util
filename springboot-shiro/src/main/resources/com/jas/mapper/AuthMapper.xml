@@ -13,7 +13,7 @@
         id, auth_name
     </sql>
 
-    <select id="getUserAuthListById" resultType="com.jas.entity.Auth">
+    <select id="getUserAuthListById" resultMap="BaseResultMap">
         SELECT
             *
         FROM

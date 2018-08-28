@@ -2,9 +2,9 @@ package com.jas.common.service;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.jas.entity.User;
 import com.jas.exception.MyException;
 import com.jas.status.StatusInfoEnum;
-import com.jas.vo.UserVo;
 import org.apache.shiro.SecurityUtils;
 
 /**
@@ -13,18 +13,19 @@ import org.apache.shiro.SecurityUtils;
  * @create 2018-08-27 15:24
  */
 public class SuperService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> {
+
     /**
      * 获取当前用户
-     *
-     * @return user对象
+     * 
+     * @return
      */
-    public UserVo getCurrentUser() {
-        UserVo userVo = (UserVo) SecurityUtils.getSubject().getPrincipal();
+    public User getCurrentUser() {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
         
-        if (userVo == null) {
+        if (user == null) {
             throw new MyException(StatusInfoEnum.REQUEST_UNAUTHC_EXCEPTION);
         }
         
-        return userVo;
+        return user;
     }
 }

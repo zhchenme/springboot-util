@@ -7,8 +7,9 @@ import com.jas.common.service.SuperService;
 import com.jas.entity.User;
 import com.jas.exception.MyException;
 import com.jas.mapper.UserDao;
+import com.jas.service.UserRoleService;
 import com.jas.service.UserService;
-import com.jas.vo.UserVo;
+import com.jas.status.AuthorizationEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -31,29 +32,38 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl extends SuperService<UserDao, User> implements UserService{
-    
-    private Logger logger = LoggerFactory.getLogger(getClass());
-    
+
+    private static final Logger logger = LoggerFactory.getLogger(UserRoleService.class);
+
     @Override
     public Boolean userLogin(String userName, String password) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-        
+
         try {
             subject.login(token);
+
+            /**
+             * 模拟授权操作
+             */
+            if (subject.isPermitted(AuthorizationEnum.MANAGER_ALL.getCode())) {
+                logger.info("当前是管理员，拥有所有权限");
+            } else if (subject.isPermitted(AuthorizationEnum.USER_SELECT.getCode())) {
+                logger.info("当前是普通用户，拥有只读权限");
+            }
         } catch (UnknownAccountException e) {
             return false;
-        }catch (IncorrectCredentialsException e) {
+        } catch (IncorrectCredentialsException e) {
             return false;
         }
-        
+
         return true;
     }
 
     @Override
-    public UserVo getCurrentUser() {
-        UserVo currentUser = super.getCurrentUser();
-        
+    public User getCurrentUser() {
+        User currentUser = super.getCurrentUser();
+
         return currentUser;
     }
 
@@ -67,10 +77,10 @@ public class UserServiceImpl extends SuperService<UserDao, User> implements User
         if (userList.isEmpty()) {
             throw new MyException("用户数据为空，请稍后尝试");
         }
-        
+
         // 设置结果集
         request.getPagePlus().setRecords(userList);
-        
+
         return new MyBasePageResponse<>(request.getPagePlus());
     }
 }

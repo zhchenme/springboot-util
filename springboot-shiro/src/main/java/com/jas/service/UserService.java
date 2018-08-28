@@ -1,12 +1,9 @@
 package com.jas.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.jas.common.MyBasePageRequest;
 import com.jas.common.MyBasePageResponse;
 import com.jas.entity.User;
-import com.baomidou.mybatisplus.service.IService;
-import com.jas.vo.UserVo;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -32,7 +29,7 @@ public interface UserService extends IService<User> {
      * 
      * @return
      */
-    UserVo getCurrentUser();
+    User getCurrentUser();
     
     /**
      * 获取所有用户信息

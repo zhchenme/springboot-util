@@ -7,9 +7,8 @@ import com.jas.common.ResponseEntity;
 import com.jas.entity.User;
 import com.jas.service.UserService;
 import com.jas.status.StatusInfoEnum;
-import com.jas.vo.UserVo;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,28 +30,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-/*    *//**
-     * 用户登录
-     * 
-     * @param userName
-     * @param password
-     * @return
-     *//*
-    @GetMapping("/login")
-    public ResponseEntity<Boolean> userLogin(@RequestParam String userName, @RequestParam String password) {
-        ResponseEntity<Boolean> res = new ResponseEntity<>();
-        
-        try {
-            res.setData(userService.userLogin(userName, password));
-        } catch (UnknownAccountException e) {
-            res.statusInfo(StatusInfoEnum.REQUEST_USERNAMEORPASSWORD_EXCEPTION);
-        } catch (IncorrectCredentialsException e) {
-            res.statusInfo(StatusInfoEnum.REQUEST_USERNAMEORPASSWORD_EXCEPTION);
-        }
-
-        return res;
-    }*/
-
     /**
      * 用户登录
      *
@@ -64,6 +41,7 @@ public class UserController {
     public ResponseEntity<Boolean> userLogin(@RequestParam String userName, @RequestParam String password) {
         ResponseEntity<Boolean> res = new ResponseEntity<>();
         Boolean b = userService.userLogin(userName, password);
+        
         res.setData(b);
         
         if (false == b) {
@@ -98,15 +76,32 @@ public class UserController {
     }
 
     /**
-     * 获取当前用户信息
+     * 安全退出
+     *
+     * @return
+     */
+    @GetMapping("/logout")
+    private ResponseEntity<Boolean> logout() {
+        ResponseEntity<Boolean> res = new ResponseEntity<>();
+        Subject subject = SecurityUtils.getSubject();
+        
+        subject.logout();
+        subject.getSession().removeAttribute("currentUser");
+        res.setData(true);
+        
+        return res;
+    }
+    
+    /**
+     * 获取当前用户信息，测试用
      * 
      * @return
      */
     @GetMapping("/current")
-    public ResponseEntity<UserVo> getCurrentUser() {
-        ResponseEntity<UserVo> res = new ResponseEntity<>();
-        UserVo userVo = userService.getCurrentUser();
-        res.setData(userVo);
+    public ResponseEntity<User> getCurrentUser() {
+        ResponseEntity<User> res = new ResponseEntity<>();
+        User user = userService.getCurrentUser();
+        res.setData(user);
         return res;
     }
     

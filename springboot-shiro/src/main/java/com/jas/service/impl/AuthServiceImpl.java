@@ -1,9 +1,10 @@
 package com.jas.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jas.entity.Auth;
+import com.jas.exception.MyException;
 import com.jas.mapper.AuthDao;
 import com.jas.service.AuthService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public class AuthServiceImpl extends ServiceImpl<AuthDao, Auth> implements AuthS
 
     @Override
     public List<Auth> getUserAuthListById(Long id) {
+        if (null == id) {
+            throw new MyException("未知异常，请联系");
+        }
+        
         return super.baseMapper.getUserAuthListById(id);
     }
 }

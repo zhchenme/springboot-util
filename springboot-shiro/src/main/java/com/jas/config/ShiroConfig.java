@@ -63,8 +63,9 @@ public class ShiroConfig {
         // 设置过滤链
         Map<String, String> filterChainMap = new LinkedHashMap<>();
         
-        filterChainMap.put("/shiro/user/login", "anon");
-        filterChainMap.put("/shiro/*", "authc");
+        filterChainMap.put("/user/login", "anon");
+        filterChainMap.put("/user/logout", "anon");
+        filterChainMap.put("/user/**", "authc");
         
         factory.setFilterChainDefinitionMap(filterChainMap);
         
@@ -95,6 +96,8 @@ public class ShiroConfig {
 
     /**
      * Session Manager 使用的是 shiro-redis 开源插件
+     * 
+     * @return
      */
     @Bean
     public DefaultWebSessionManager sessionManager() {
@@ -107,7 +110,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 配置shiro redisManager 使用的是shiro-redis开源插件
+     * 配置 shiro redisManager 使用的是shiro-redis开源插件
      *
      * @return
      */
@@ -126,7 +129,7 @@ public class ShiroConfig {
     }
 
     /**
-     * cacheManager 缓存 redis实现 使用的是 shiro-redis 开源插件
+     * cacheManager 缓存，使用的是 shiro-redis 开源插件
      *
      * @return
      */

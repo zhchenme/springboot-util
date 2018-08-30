@@ -26,10 +26,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeDao, Employee> impl
     
     @Override
     public MyBasePageResponse<Employee> getEmpPage(MyBasePageRequest<Employee> request) {
-        if (null == request) {
-            throw new MyException("出现错误，请联系管理员");
-        }
-        
         // 设置倒排序字段
         request.setDescs(Arrays.asList("id"));
 

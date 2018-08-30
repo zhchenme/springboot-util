@@ -42,4 +42,6 @@ Spring Boot 整合邮件开发，定时任务。
 
 ## springboot-mybatis-plus 
 
-Spring Boot 整合 MyBatis Plus 的企业级 demo，包括完整的系统架构设计。
+Spring Boot 整合 MyBatis Plus 的企业级 demo。
+
+采用前后端分离的方式，在后端使用通用的实体返回 JSON 数据，包括枚举的使用、统一分页请求与响应实体类、自定义异常与异常处理等。

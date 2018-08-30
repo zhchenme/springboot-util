@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     
-    private static Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 运行时异常处理
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?>  runtimeExceptionHandler(Exception e) {
         ResponseEntity<Boolean> res = new ResponseEntity<>(StatusInfoEnum.BUSINESS_FAILURE.getCode(),
                 StatusInfoEnum.BUSINESS_FAILURE.getMessage());
-        log.error("runtime exception" + " >_> " + e.getMessage(), e);
+        logger.error("runtime exception" + " >_> " + e.getMessage(), e);
         return res;
     }
 
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MyException.class)
     public ResponseEntity<?> myExceptionHandler(MyException e) {
         ResponseEntity<Boolean> res = new ResponseEntity<>(e.getErrorCode(), e.getMessage());
-        log.error("customize exception" + " >_> " + e.getMessage(), e);
+        logger.error("customize exception" + " >_> " + e.getMessage(), e);
         return res;
     }
 
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> argumentErrorHandler(HttpMessageConversionException e) {
         ResponseEntity<String> res = new ResponseEntity<>(StatusInfoEnum.BUSINESS_FAILURE.getCode(), 
                 StatusInfoEnum.BUSINESS_FAILURE.getMessage());
-        log.error("message conversion exception" + " >_> " + e.getMessage(), e);
+        logger.error("message conversion exception" + " >_> " + e.getMessage(), e);
         return res;
     }
 

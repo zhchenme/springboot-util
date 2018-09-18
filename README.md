@@ -1,6 +1,95 @@
 
 # springboot-study
 
+## springboot-chart
+柱状图、条形图、饼图数据封装的简单。在做一些报表统计时如果涉及到图表，可以参考这个 demo。
+
+参考 [xwjie](https://github.com/xwjie/SpringBootEChart) 的开源代码，修改了一部分，方便以后用到项目中去。
+效果图
+![avatar](springboot-chart/images/2.png)
+
+## springboot-cors
+
+Spring Boot 结合 CORS 在服务端解决 AJAX 跨域问题的 demo。
+
+1.使用 <code>CorsConfiguration</code> 配置
+```java
+@Configuration
+public class CorsConfig {
+    private static final String ORIGIN = "Origin";
+    private static final String HEADERS = "Access-Control-Request-Headers";
+    
+    /**
+     * 通过设置自定义 CorsFilter 过滤器支持跨域
+     *
+     * @return
+     */
+    @Bean
+    public MyCorsFilter injectCorsFilter() {
+        return new MyCorsFilter();
+    }
+
+    private CorsConfiguration buildConfig() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.addAllowedOrigin("*");
+        // 设置支持带 Cookie 的跨域请求
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*"); 
+        // 设置非简单请求的预检命令缓存时间，单位 's'
+        corsConfiguration.setMaxAge(1728000L);
+        
+        return corsConfiguration;
+    }
+}
+```
+2.使用过滤器配置
+```java
+public class MyCorsFilter extends OncePerRequestFilter {
+    private static final String ORIGIN = "Origin";
+    private static final String HEADERS = "Access-Control-Request-Headers";
+    
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) 
+            throws ServletException, IOException {
+        // 获取请求头中的 'Origin' 信息
+        String origin = request.getHeader(ORIGIN);
+        // 获取请求头中的 'header' 信息
+        String headers = request.getHeader(HEADERS);
+        
+        /**
+         * 1.支持任何域名跨域访问
+         * 当 'Access-Control-Allow-Origin' 设置为 '*' 时，不能解决带 Cookie 的跨域
+         */
+        if (!StringUtils.isEmpty(origin)) {
+            response.setHeader("Access-Control-Allow-Origin", origin);
+        }
+
+        /**
+         * 2.支持自定义请求头的跨域
+         */
+        if (!StringUtils.isEmpty(headers)) {
+            response.setHeader("Access-Control-Allow-Headers", headers);
+        }
+        
+        // 3.设置支持带 Cookie 的跨域请求
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        // 4.设置允许跨域请求的方法形式 'GET'、'DELETE' 等
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        // 5.设置非简单请求的预检命令缓存时间，单位 's'
+        response.setHeader("Access-Control-Max-Age", "1728000");
+
+        if ("OPTIONS".equals(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            filterChain.doFilter(request, response);
+        }
+            
+    }
+}
+```
+
 ## springboot
 
 实现了 SpringBoot + MyBatis 搭建的小程序。<code>areadisplay </code> 中包含了小程序所需要的代码，<code>t_area.sql </code> 是数据库导出的结构文件，<code>src </code> 目录下为主要的后端代码。
@@ -23,10 +112,6 @@ demo 基于 Spring Boot2.03、Tomcat-8.5.31
 ## springboot-mybatis
 
 整合了基于注解与配置文件两种方式的 demo，使用阿里开源的数据源 <code>druid</code>，并配置了监控中心。
-
-## springboot-cors
-
-Spring Boot 在服务端解决 AJAX 跨域问题的 demo。
 
 ## springboot-swagger
 

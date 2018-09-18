@@ -2,7 +2,7 @@
 # springboot-study
 
 ## springboot-chart
-柱状图、条形图、饼图数据封装的简单。在做一些报表统计时如果涉及到图表，可以参考这个 demo。
+柱状图、条形图、饼图数据的简单封装。在做一些报表统计时如果涉及到图表，可以参考这个 demo。
 
 参考 [xwjie](https://github.com/xwjie/SpringBootEChart) 的开源代码，修改了一部分，方便以后用到项目中去。
 

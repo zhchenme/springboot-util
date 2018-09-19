@@ -1,6 +1,12 @@
 
 # springboot-study
 
+## springboot
+
+使用 SpringBoot + MyBatis 搭建的微信小程序。<code>areadisplay </code> 中包含了小程序所需要的代码，<code>t_area.sql </code> 是数据库导出的结构文件，<code>src </code> 目录下为主要的后端代码。
+
+包括了一些配置信息与基本的增删改查代码，刚入门的同学可以参考这个 demo。
+
 ## springboot-chart
 柱状图、条形图、饼图数据的简单封装。在做一些报表统计时如果涉及到图表，可以参考这个 demo。
 
@@ -347,10 +353,108 @@ logging:
   level:
     com.jas.mapper: debug
 ```
-## springboot
+## springboot-mybatis-plus 
 
-实现了 SpringBoot + MyBatis 搭建的小程序。<code>areadisplay </code> 中包含了小程序所需要的代码，<code>t_area.sql </code> 是数据库导出的结构文件，<code>src </code> 目录下为主要的后端代码。
+Spring Boot 整合 MyBatis Plus 的企业级 demo。
 
+采用前后端分离的方式，在后端使用通用的实体返回 JSON 数据，包括枚举的使用、统一分页请求与响应实体类、自定义异常与异常处理等。
+
+所有的数据库文件都传了上来，可直接在可视化的数据库工具中还原。
+
+数据源与 MyBatis Plus 的配置类，关于数据源的详细配置信息可以在 <code>application.properties</code> 中查看。
+```java
+@Configuration
+@MapperScan(basePackages = {"com.jas.mapper"}, sqlSessionFactoryRef = "sqlSessionFactory")
+public class DataSourceConfig {
+    
+    @Primary
+    @Bean(name = "dataSource")
+    @ConfigurationProperties(prefix = "datasource")
+    public DataSource dataSource() {
+        return new DruidDataSource();
+    }
+
+    @Primary
+    @Bean(name = "transactionManager")
+    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Primary
+    @Bean(name = "sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
+        MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+        
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setMapperLocations(
+                new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX 
+                        + "com/jas/mapper/*Mapper.xml"));
+        factoryBean.setTypeAliasesPackage("com.jas.entity");
+        factoryBean.setPlugins(new Interceptor[] { paginationInterceptor(), 
+                optimisticLockerInterceptor(), sqlExplainInterceptor(), performanceInterceptor()});
+        factoryBean.setGlobalConfig(this.globalConfiguration());
+
+        return factoryBean.getObject();
+    }
+
+    /**
+     * 乐观锁插件
+     * 
+     * @return
+     */
+    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
+    }
+
+    /**
+     * SQL 分析拦截器，防止恶意删除或更新全表数据
+     * 
+     * @return
+     */
+    public SqlExplainInterceptor sqlExplainInterceptor() {
+        return new SqlExplainInterceptor();
+    }
+
+    /**
+     * 分页插件
+     * 
+     * @return
+     */
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
+    }
+
+    /**
+     * SQL 执行效率插件
+     * 
+     * @return
+     */
+    public PerformanceInterceptor performanceInterceptor() {
+        PerformanceInterceptor intrceptor = new PerformanceInterceptor();
+        
+        intrceptor.setMaxTime(20000);
+        intrceptor.setFormat(true);
+        
+        return intrceptor;
+    }
+
+    /**
+     * 全局配置，主键策略、驼峰命名、设置逻辑删除
+     * 
+     * @return
+     */
+    private GlobalConfiguration globalConfiguration() {
+        GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
+        
+        conf.setLogicDeleteValue(BaseLogicDeleteEnum.LogicDelete.getValue());
+        conf.setLogicNotDeleteValue(BaseLogicDeleteEnum.LogicNotDelete.getValue());
+        conf.setIdType(IdType.AUTO.getKey());
+        conf.setDbColumnUnderline(true);
+        
+        return conf;
+    }
+}
+```
 
 ## springboot-swagger
 
@@ -381,8 +485,3 @@ public class SwaggerConfiguration {
     }
 }
 ```
-## springboot-mybatis-plus 
-
-Spring Boot 整合 MyBatis Plus 的企业级 demo。
-
-采用前后端分离的方式，在后端使用通用的实体返回 JSON 数据，包括枚举的使用、统一分页请求与响应实体类、自定义异常与异常处理等。

@@ -1,0 +1,11 @@
+dubbo:
+  application:
+    name: springboot-dubbo-demo # \u5F53\u524D\u670D\u52A1\u540D
+  protocol:
+    port: 20880                 # \u901A\u4FE1\u534F\u8BAE\u7AEF\u53E3
+    name: dubbo                 # \u901A\u4FE1\u534F\u8BAE
+  registry:
+    protocol: zookeeper         # \u6CE8\u518C\u4E2D\u5FC3
+    address: 127.0.0.1:2181     # \u6CE8\u518C\u4E2D\u5FC3\u5730\u5740
+  monitor:
+    protocol: registry          # \u76D1\u63A7\u4E2D\u5FC3\uFF0C\u4ECE\u6CE8\u518C\u4E2D\u5FC3\u81EA\u52A8\u53D1\u73B0

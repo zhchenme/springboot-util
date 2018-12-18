@@ -34,8 +34,9 @@ public class MailTask {
         mimeMessageHelper.setSubject("测试测试测测测");
         mimeMessageHelper.setText("<b style='color:red'>测试测试</b>", true);
 
-        mimeMessageHelper.setTo("1012037464@qq.com");
-        mimeMessageHelper.setFrom("coderjas@foxmail.com");
+        // .... 无语
+        mimeMessageHelper.setTo("...@qq.com");
+        mimeMessageHelper.setFrom("...@foxmail.com");
 
         mimeMessageHelper.addAttachment("1.jpg",
                 ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "static/images/1.jpg"));

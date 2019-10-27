@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jas.sjdemo.dao.OrderDao">
+
+    <insert id="addOne" useGeneratedKeys="true" keyProperty="orderId" parameterType="user">
+        insert into order(userId,createTime,totalPrice) values(#{userId},#{createTime},#{totalPrice})
+    </insert>
+
+    <insert id="addTwo" useGeneratedKeys="true" keyProperty="orderId" parameterType="user">
+        insert into order(orderId,userId,createTime,totalPrice) values(#{orderId},#{userId},#{createTime},#{totalPrice})
+    </insert>
+
+    <select id="selectOne" resultType="com.jas.sjdemo.entity.Order">
+        select * from order where orderId=#{orderId} and userId=#{userId}
+    </select>
+
+    <select id="getOrderByUserId" resultType="com.jas.sjdemo.entity.Order">
+      select * from order a inner join user b on a.userId = b.userId where b.userId=#{id}
+    </select>
+
+</mapper>

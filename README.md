@@ -456,6 +456,12 @@ public class DataSourceConfig {
 }
 ```
 
+## springboot-sharding-jdbc
+
+springboot 整合 sharding-jdbc 的 demo。
+
+参考：[超详细sharding-jdbc分库分表实现（基于spring-boot)](https://www.tapme.top/blog/detail/2019-03-20-10-38/)
+
 ## springboot-swagger
 
 Spring Boot 整合 Swagger API 构建工具，提供可视化的 UI 文档界面，便于前后端交互。
